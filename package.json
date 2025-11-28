@@ -1,6 +1,6 @@
 {
   "name": "bask-stream",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,5 +29,9 @@
     "lib/**/*"
   ],
   "keywords": ["Stream", "Utilities"],
-  "author": "Dmitry Baskakov <dmitry@bask.ws>"
+  "author": "Dmitry Baskakov <dmitry@bask.ws>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baskakov/bask-stream"
+  }
 }
