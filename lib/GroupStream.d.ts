@@ -14,7 +14,3 @@ export declare class GroupStream<K = any, A = any[]> extends Duplex {
     _write(chunk: any, encoding: BufferEncoding, callback: (error?: Error | null) => void): void;
     _final(callback: (error?: Error | null) => void): void;
 }
-declare const _default: {
-    GroupStream: typeof GroupStream;
-};
-export default _default;
