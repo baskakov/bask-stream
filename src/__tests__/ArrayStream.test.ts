@@ -135,6 +135,19 @@ describe('ArrayStream', () => {
         expect(isFinished).toBe(true)
     })
 
+    it('delivers every batch (incl. a partial last one) via async iteration', async () => {
+        const stream = new ArrayStream<number>({ size: 2 })
+        for (const n of [1, 2, 3, 4, 5]) stream.write(n)
+        stream.end()
+
+        const batches: number[][] = []
+        // Previously this threw ERR_STREAM_PREMATURE_CLOSE and dropped [5].
+        for await (const batch of stream as AsyncIterable<number[]>) {
+            batches.push(batch)
+        }
+        expect(batches).toStrictEqual([[1, 2], [3, 4], [5]])
+    })
+
     it('handles negative size as never full, emits all on end', async () => {
         const result: number[][] = []
         const stream = new ArrayStream<number>({ size: -1 })

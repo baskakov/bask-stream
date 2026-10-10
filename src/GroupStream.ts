@@ -40,9 +40,14 @@ export class GroupStream<K = any, A = any[]> extends Duplex {
     }
 
     _final(callback: (error?: Error | null) => void): void {
-        if (this.acc) this.push(this.acc)
-        this.end()
-        this.destroy()
+        if (this.acc) {
+            this.push(this.acc)
+            this.acc = null
+        }
+        // End the readable side cleanly so consumers receive the last batch and
+        // a proper 'end' event. Destroying here instead dropped the final batch
+        // and raised ERR_STREAM_PREMATURE_CLOSE for pipe/async-iterator readers.
+        this.push(null)
         callback()
     }
 }
